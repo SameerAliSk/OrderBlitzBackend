@@ -1,17 +1,19 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using OrderManagement;
 using OrderManagement.Context;
 using OrderManagement.Repository.Implementation;
 using OrderManagement.Repository.Interface;
 using OrderManagement.Service.Implementation;
 using OrderManagement.Service.Interface;
+using OfficeOpenXml;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddCors(p => p.AddPolicy("corsPolicy", build =>
@@ -22,9 +24,14 @@ builder.Services.AddDbContext<EcommerceContext>(options => options.UseSqlServer(
 
 builder.Services.AddScoped<ICustomersService, CustomersService>();
 builder.Services.AddScoped<IOrdersService, OrdersService>();
+builder.Services.AddScoped<IProductsService, ProductsService>();
 
-builder.Services.AddScoped<ICustomersRepository,CustomersRepository>();
+builder.Services.AddScoped<ICustomersRepository, CustomersRepository>();
 builder.Services.AddScoped<IOrdersRepository, OrdersRepository>();
+builder.Services.AddScoped<IProductsRepository, ProductsRepository>();
+
+// Set EPPlus license context
+ExcelPackage.LicenseContext = LicenseContext.NonCommercial; // Or LicenseContext.Commercial, based on your license
 
 var app = builder.Build();
 
