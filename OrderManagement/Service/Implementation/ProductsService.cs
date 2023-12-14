@@ -1,4 +1,5 @@
 ﻿using OfficeOpenXml;
+using OrderManagement.Models.Domain;
 using OrderManagement.Models.Dto;
 using OrderManagement.Repository.Interface;
 using OrderManagement.Service.Interface;
@@ -11,6 +12,27 @@ namespace OrderManagement.Service.Implementation
         public ProductsService(IProductsRepository productsRepository)
         {
             this.productsRepository = productsRepository;
+        }
+
+        public async Task<int> GetAllProductsCountAsync()
+        {
+            List<ProductItemDetail> productItemDetails = await productsRepository.GetAllProductsCount();
+            return productItemDetails.Count;
+        }
+
+        public async Task<List<ProductItemDetail>> GetTopThreeLeastSellingProductsAsync()
+        {
+           return await productsRepository.GetTopThreeLeastSellingProductsAsync();
+        }
+
+        public async Task<List<ProductItemDetail>> GetTopThreeLowStockProductsAsync()
+        {
+            return await productsRepository.GetTopThreeLowStockProducts();
+        }
+
+        public async Task<List<ProductItemDetail>> GetTopThreeMostSellingProductsAsync()
+        {
+            return await productsRepository.GetTopThreeMostSellingProductsAsync();
         }
 
         public async Task UpdateDatabaseFromExcel()

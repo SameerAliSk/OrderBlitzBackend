@@ -135,5 +135,30 @@ namespace OrderManagement.Service.Implementation
         {
             await ordersRepository.UpdateOrderStatusAsync(orderId, newStatus);
         }
+
+        public async Task<object> GetOrdersCountByMonthForLast12MonthsAsync()
+        {
+            return await ordersRepository.GetOrdersCountByMonthForLast12MonthsAsync();
+        }
+
+        public async Task<object> GetOrdersCountForLastSevenDaysAsync()
+        {
+            return await ordersRepository.GetOrdersCountForLastSevenDaysAsync();
+        }
+
+        public async Task<int> GetTotalOrdersCountForTodayAsync()
+        {
+            return await ordersRepository.GetTotalOrdersCountForTodayAsync();
+        }
+
+        public async Task<List<object>> GetProductCountsByBrandAsync()
+        {
+            return await ordersRepository.GetProductCountsByBrandAsync();
+        }
+
+        public async Task<double> GetAverageReturnRateAsync()
+        {
+            return await ordersRepository.GetAverageReturnRateAsync();
+        }
     }
 }

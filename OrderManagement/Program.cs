@@ -25,13 +25,17 @@ builder.Services.AddDbContext<EcommerceContext>(options => options.UseSqlServer(
 builder.Services.AddScoped<ICustomersService, CustomersService>();
 builder.Services.AddScoped<IOrdersService, OrdersService>();
 builder.Services.AddScoped<IProductsService, ProductsService>();
+builder.Services.AddScoped<ICategoriesService,CategoriesService>();
+builder.Services.AddScoped<IBrandsService, BrandsService>();
 
 builder.Services.AddScoped<ICustomersRepository, CustomersRepository>();
 builder.Services.AddScoped<IOrdersRepository, OrdersRepository>();
 builder.Services.AddScoped<IProductsRepository, ProductsRepository>();
+builder.Services.AddScoped<ICategoriesRepository,CategoriesRepository>();
+builder.Services.AddScoped<IBrandsRepository, BrandsRepository>();
 
 // Set EPPlus license context
-ExcelPackage.LicenseContext = LicenseContext.NonCommercial; // Or LicenseContext.Commercial, based on your license
+ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
 var app = builder.Build();
 

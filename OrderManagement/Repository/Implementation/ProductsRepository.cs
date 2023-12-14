@@ -2,6 +2,7 @@
 using OrderManagement.Models.Dto;
 using OrderManagement.Repository.Interface;
 using Microsoft.EntityFrameworkCore;
+using OrderManagement.Models.Domain;
 
 namespace OrderManagement.Repository.Implementation
 {
@@ -11,6 +12,32 @@ namespace OrderManagement.Repository.Implementation
         public ProductsRepository(EcommerceContext dbContext)
         {
             this.dbContext = dbContext;
+        }
+
+        public async Task<List<ProductItemDetail>> GetAllProductsCount()
+        {
+            return await dbContext.ProductItemDetails.ToListAsync();
+        }
+
+        public async Task<List<ProductItemDetail>> GetTopThreeLeastSellingProductsAsync()
+        {
+            return await dbContext.ProductItemDetails
+                .OrderBy(p => p.OrderedItems.Sum(o => o.Quantity))
+                .Take(3)
+                .ToListAsync();
+        }
+
+        public async Task<List<ProductItemDetail>> GetTopThreeLowStockProducts()
+        {
+            return await dbContext.ProductItemDetails.Where(p => p.QtyInStock < 10).OrderBy(p=>p.QtyInStock).Take(3).ToListAsync();
+        }
+
+        public async Task<List<ProductItemDetail>> GetTopThreeMostSellingProductsAsync()
+        {
+            return await dbContext.ProductItemDetails
+                .OrderByDescending(p => p.OrderedItems.Sum(o => o.Quantity))
+                .Take(3)
+                .ToListAsync();
         }
 
         public async Task UpdateFromExcel(List<ProductItemDetailDTO> excelData)

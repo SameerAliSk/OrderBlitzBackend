@@ -12,5 +12,10 @@ namespace OrderManagement.Repository.Interface
         Task<ShippingOrder> GetOrderById(Guid orderId);
         Task UpdateOrderStatusAsync(Guid orderId, string newStatus);
         Task<Dictionary<string, int>> GetOrderCountsByStatusAsync();
+        Task<object> GetOrdersCountByMonthForLast12MonthsAsync();
+        Task<object> GetOrdersCountForLastSevenDaysAsync();
+        Task<int> GetTotalOrdersCountForTodayAsync();
+        Task<List<object>> GetProductCountsByBrandAsync();
+        Task<double> GetAverageReturnRateAsync();
     }
 }

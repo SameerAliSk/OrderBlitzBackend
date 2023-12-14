@@ -131,6 +131,72 @@ namespace OrderManagement.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, new { Message = ex.Message });
             }
         }
+        [HttpGet("orders-count-last-12-months")]
+        public async Task<IActionResult> GetOrdersCountByMonthForLast12Months()
+        {
+            try
+            {
+                var ordersCountByMonth = await ordersService.GetOrdersCountByMonthForLast12MonthsAsync();
+
+                return Ok(ordersCountByMonth);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { Message = ex.Message });
+            }
+        }
+        [HttpGet("orders-count-last-seven-days")]
+        public async Task<IActionResult> GetOrdersCountForLastSevenDays()
+        {
+            try
+            {
+                var result = await ordersService.GetOrdersCountForLastSevenDaysAsync();
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = ex.Message });
+            }
+        }
+        [HttpGet("total-orders-today")]
+        public async Task<IActionResult> GetTotalOrdersCountForToday()
+        {
+            try
+            {
+                var totalOrdersCount = await ordersService.GetTotalOrdersCountForTodayAsync();
+                return Ok(totalOrdersCount);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = ex.Message });
+            }
+        }
+        [HttpGet("product-counts-by-brand")]
+        public async Task<IActionResult> GetProductCountsByBrand()
+        {
+            try
+            {
+                var productCountsByBrand = await ordersService.GetProductCountsByBrandAsync();
+                return Ok(productCountsByBrand);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = ex.Message });
+            }
+        }
+        [HttpGet("average-return-rate")]
+        public async Task<IActionResult> GetAverageReturnRate()
+        {
+            try
+            {
+                var averageReturnRate = await ordersService.GetAverageReturnRateAsync();
+                return Ok(averageReturnRate);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"An error occurred: {ex.Message}");
+            }
+        }
 
     }
 }
