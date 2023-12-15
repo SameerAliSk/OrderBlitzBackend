@@ -26,7 +26,7 @@ namespace OrderManagement.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, new { Message = ex.Message });
             }
         }
-        [HttpGet("all-categories")]
+        [HttpGet("all-categories-names")]
         public async Task<IActionResult> GetAllCategories()
         {
             try

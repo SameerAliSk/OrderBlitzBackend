@@ -83,7 +83,8 @@ namespace OrderManagement.Controllers
                     var productDetails = topThreeMostSellingProducts.Select(p => new
                     {
                         ProductItemImage = p.ProductItemImage.Split(',')[0],
-                        ProductItemName = p.ProductItemName
+                        ProductItemName = p.ProductItemName,
+                        Price = p.Price
                     });
 
                     return Ok(productDetails);
@@ -111,7 +112,8 @@ namespace OrderManagement.Controllers
                     var productDetails = topThreeLeastSellingProducts.Select(p => new
                     {
                         ProductItemImage = p.ProductItemImage.Split(',')[0],
-                        ProductItemName = p.ProductItemName
+                        ProductItemName = p.ProductItemName,
+                        Price = p.Price
                     });
 
                     return Ok(productDetails);
