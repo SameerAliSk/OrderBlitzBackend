@@ -4,7 +4,7 @@ namespace OrderManagement.Service.Interface
 {
     public interface IProductsService
     {
-        Task UpdateDatabaseFromExcel();
+        Task UpdateDatabaseFromExcel(string filePath);
         Task<int> GetAllProductsCountAsync();
 
         Task<List<ProductItemDetail>> GetTopThreeLowStockProductsAsync();

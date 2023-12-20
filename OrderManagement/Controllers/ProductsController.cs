@@ -19,13 +19,13 @@ namespace OrderManagement.Controllers
         {
             try
             {
-                string filePath = @"C:\Users\a98016115\OneDrive - ONEVIRTUALOFFICE\productItemDetails.xlsx";
+                string filePath = @"C:\EcommerceProductList\productItemDetails.xlsx";
                 if (string.IsNullOrEmpty(filePath))
                 {
                     return BadRequest("File path not provided.");
                 }
 
-                await productsService.UpdateDatabaseFromExcel();
+                await productsService.UpdateDatabaseFromExcel(filePath);
                 return Ok("Sync completed successfully.");
             }
             catch (FileNotFoundException ex)

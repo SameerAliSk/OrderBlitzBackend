@@ -131,6 +131,7 @@ namespace OrderManagement.Service.Implementation
             return orderStatusCounts;
         }
 
+        //this is the api to update order status
         public async Task UpdateOrderStatusAsync(Guid orderId, string newStatus)
         {
             await ordersRepository.UpdateOrderStatusAsync(orderId, newStatus);

@@ -100,6 +100,7 @@ namespace OrderManagement.Controllers
                 });
             }
         }
+        //this is the api to update order status
         [HttpPost("update-order-status/{orderId}")]
         public async Task<IActionResult> UpdateOrderStatus(Guid orderId, [FromBody] UpdateOrderStatusDto updateOrderStatusDto)
         {

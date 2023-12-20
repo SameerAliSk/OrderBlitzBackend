@@ -17,5 +17,7 @@ namespace OrderManagement.Repository.Interface
         Task<int> GetTotalOrdersCountForTodayAsync();
         Task<List<object>> GetProductCountsByBrandAsync();
         Task<double> GetAverageReturnRateAsync();
+        Task<string> GetCustomerEmailById(Guid customerId);
+
     }
 }

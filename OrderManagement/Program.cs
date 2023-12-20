@@ -9,6 +9,7 @@ using OrderManagement.Repository.Interface;
 using OrderManagement.Service.Implementation;
 using OrderManagement.Service.Interface;
 using OfficeOpenXml;
+using OrderManagement.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +23,8 @@ builder.Services.AddCors(p => p.AddPolicy("corsPolicy", build =>
 }));
 builder.Services.AddDbContext<EcommerceContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("OderBlitzConnection")));
 
+builder.Services.AddScoped<EmailService>();
+
 builder.Services.AddScoped<ICustomersService, CustomersService>();
 builder.Services.AddScoped<IOrdersService, OrdersService>();
 builder.Services.AddScoped<IProductsService, ProductsService>();
@@ -33,7 +36,6 @@ builder.Services.AddScoped<IOrdersRepository, OrdersRepository>();
 builder.Services.AddScoped<IProductsRepository, ProductsRepository>();
 builder.Services.AddScoped<ICategoriesRepository,CategoriesRepository>();
 builder.Services.AddScoped<IBrandsRepository, BrandsRepository>();
-
 // Set EPPlus license context
 ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 

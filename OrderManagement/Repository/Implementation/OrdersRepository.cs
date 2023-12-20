@@ -2,6 +2,7 @@
 using OrderManagement.Context;
 using OrderManagement.Models.Domain;
 using OrderManagement.Repository.Interface;
+using OrderManagement.Service;
 using System.Globalization;
 
 namespace OrderManagement.Repository.Implementation
@@ -9,9 +10,11 @@ namespace OrderManagement.Repository.Implementation
     public class OrdersRepository : IOrdersRepository
     {
         private readonly EcommerceContext dbContext;
-        public OrdersRepository( EcommerceContext dbContext)
+        private readonly EmailService emailService;
+        public OrdersRepository( EcommerceContext dbContext, EmailService emailService)
         {
             this.dbContext = dbContext;
+            this.emailService = emailService;
         }
 
         public async Task<List<ShippingOrder>> GetAllOrders()
@@ -40,7 +43,7 @@ namespace OrderManagement.Repository.Implementation
                 .Take(5)
                 .ToListAsync();
         }
-
+        //this is the api to update order status
         public async Task UpdateOrderStatusAsync(Guid orderId, string newStatus)
         {
             var order = await dbContext.ShippingOrders
@@ -50,8 +53,14 @@ namespace OrderManagement.Repository.Implementation
             {
                 order.OrderStatus = newStatus;
                 await dbContext.SaveChangesAsync();
+                var customerId = order.CustomerId;
+                string customerEmail = await  GetCustomerEmailById(customerId);
+
+                // Send email notification
+                await emailService.SendOrderStatusEmailNotification(customerEmail, orderId, newStatus);
             }
         }
+        
 
         public async Task<List<OrderedItem>> TotalOrders()
         {
@@ -200,6 +209,18 @@ namespace OrderManagement.Repository.Implementation
             }
 
             return ((double)returnedOrdersCount / totalOrdersCount)*100;
+        }
+
+        public async Task<string> GetCustomerEmailById(Guid customerId)
+        {
+            var customer = await dbContext.CustomerCredentials.FirstOrDefaultAsync(c => c.CustomerId == customerId);
+
+            if (customer != null)
+            {
+                return customer.EmailId;
+            }
+
+            throw new Exception("Customer not found");
         }
     }
 }

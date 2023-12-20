@@ -35,11 +35,10 @@ namespace OrderManagement.Service.Implementation
             return await productsRepository.GetTopThreeMostSellingProductsAsync();
         }
 
-        public async Task UpdateDatabaseFromExcel()
+        public async Task UpdateDatabaseFromExcel(string filePath)
         {
             try
             {
-                string filePath = @"C:\Users\a98016115\OneDrive - ONEVIRTUALOFFICE\productItemDetails.xlsx"; 
                 if (!File.Exists(filePath))
                 {
                     throw new FileNotFoundException("File not found.");
